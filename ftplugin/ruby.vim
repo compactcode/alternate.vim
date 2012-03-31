@@ -1,1 +1,1 @@
-autocmd FileType ruby command! Alternate call alternate#Alternate()
+command! -buffer Alternate call alternate#Alternate()

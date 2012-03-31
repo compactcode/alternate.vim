@@ -7,14 +7,13 @@ Lightweight plugin for alternating between tests and implementation.
 Find and edit the alternate file in the current window:
 
 ```
-:call Alternate()
+:Alternate
 ```
 
 Find the name of the alternate file:
 
 ```
-:call FindAlternate()
-:echo FindAlternate()
+:echo alternate#FindAlternate()
 ```
 
 ### Supported Languages
