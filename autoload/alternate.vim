@@ -1,21 +1,14 @@
-function Alternate()
-  execute "edit " . FindAlternate()
+function alternate#Alternate()
+  execute "edit " . alternate#FindAlternate()
 endfunction
 
-function FindAlternate()
+function alternate#FindAlternate()
   let current_file_name = expand("%:t:r")
-  let current_file_extension = expand("%:e")
-  if s:IsRuby(current_file_extension)
-    if s:IsTest(current_file_name)
-      return s:FindImplementation(current_file_name)
-    else
-      return s:FindTest(current_file_name)
-    endif
+  if s:IsTest(current_file_name)
+    return s:FindImplementation(current_file_name)
+  else
+    return s:FindTest(current_file_name)
   endif
-endfunction
-
-function s:IsRuby(file_extension)
-  return match(a:file_extension, 'rb') != -1
 endfunction
 
 function s:IsTest(file_name)
