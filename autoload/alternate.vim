@@ -18,23 +18,23 @@ function s:IsTest(file_name)
 endfunction
 
 function s:FindImplementation(directory_name, file_name, file_extension)
-  let search_dirs    = "app,lib"
-  let search_pattern = substitute(a:file_name, '_spec', '', '') . "." . a:file_extension
-  return s:FindClosestMatch(a:directory_name, search_dirs, search_pattern)
+  let search_dirs       = "app,lib"
+  let file_name_pattern = substitute(a:file_name, '_spec$', '', '') . "." . a:file_extension
+  return s:FindClosestMatch(a:directory_name, search_dirs, file_name_pattern)
 endfunction
 
 function s:FindTest(directory_name, file_name, file_extension)
-  let search_dirs    = "spec"
-  let search_pattern = a:file_name . "_spec" . "." . a:file_extension
-  return s:FindClosestMatch(a:directory_name, search_dirs, search_pattern)
+  let search_dirs       = "spec"
+  let file_name_pattern = substitute(a:file_name, '$', '_spec', '') . "." . a:file_extension
+  return s:FindClosestMatch(a:directory_name, search_dirs, file_name_pattern)
 endfunction
 
-function s:FindClosestMatch(directory_name, search_dirs, search_pattern)
-  let matches = split(globpath(a:search_dirs, "**/" . a:search_pattern), "\n")
+function s:FindClosestMatch(directory_name, search_dirs, file_name_pattern)
+  let matches = split(globpath(a:search_dirs, "**/" . a:file_name_pattern), "\n")
   if len(matches) > 1
-    for result in matches
-      if fnamemodify(result, ':h:t') == a:directory_name
-        return result
+    for file_path in matches
+      if fnamemodify(file_path, ':h:t') == a:directory_name
+        return file_path
       endif
     endfor
   endif
