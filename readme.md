@@ -19,4 +19,5 @@ Find the name of the alternate file:
 ### Supported Languages
 
 * ruby - rspec
+* coffee - jasmine
 
