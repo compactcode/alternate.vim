@@ -8,7 +8,12 @@ let s:to_test_pattern    = "$"
 let s:to_test_substitute = "_spec"
 
 function alternate#Alternate()
-  execute "edit " . alternate#FindAlternate()
+  let alternate = alternate#FindAlternate()
+  if len(alternate) > 1
+    execute "edit " . alternate
+  else
+    echo "No alternate file could be found."
+  endif
 endfunction
 
 function alternate#FindAlternate()
