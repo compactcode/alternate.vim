@@ -24,19 +24,32 @@ function alternate#Alternate()
 endfunction
 
 function alternate#FindAlternate()
-  let alternates = alternate#FindAllAlternates()
-  if len(alternates) > 1
-    let current_path = expand('%')
-    for alternate_path in alternates
-      if s:ParentDirectoryName(current_path) == s:ParentDirectoryName(alternate_path)
+  let file_path = expand('%')
+  return s:FindClosestAlternative(file_path, s:FindAllAlternates())
+endfunction
+
+function alternate#FindTest()
+  let file_path = expand('%')
+  let file_name = expand('%:t:r:r')
+  if s:IsTest(file_name)
+    return file_path
+  endif
+  let file_extension = expand('%:e:e')
+  return s:FindClosestAlternative(file_path, s:FindTestMatches(file_name, file_extension))
+endfunction
+
+function s:FindClosestAlternative(file_path, alternative_paths)
+  if len(a:alternative_paths) > 1
+    for alternate_path in a:alternative_paths
+      if s:ParentDirectoryName(a:file_path) == s:ParentDirectoryName(alternate_path)
         return alternate_path
       endif
     endfor
   endif
-  return get(alternates, 0)
+  return get(a:alternative_paths, 0)
 endfunction
 
-function alternate#FindAllAlternates()
+function s:FindAllAlternates()
   let file_name      = expand('%:t:r:r')
   let file_extension = expand('%:e:e')
   if s:IsTest(file_name)
@@ -44,10 +57,6 @@ function alternate#FindAllAlternates()
   else
     return s:FindTestMatches(file_name, file_extension)
   endif
-endfunction
-
-function s:TestPattern()
-  return  g:test_token . g:test_token_location
 endfunction
 
 function s:IsTest(file_name)
@@ -66,6 +75,10 @@ endfunction
 
 function s:FindMatches(search_dirs, file_name_pattern)
   return split(globpath(a:search_dirs, '**/' . a:file_name_pattern), '\n')
+endfunction
+
+function s:TestPattern()
+  return  g:test_token . g:test_token_location
 endfunction
 
 function s:ParentDirectoryName(path)
