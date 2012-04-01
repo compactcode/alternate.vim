@@ -32,7 +32,7 @@ Find and execute the spec for the current coffeescript file using [jest](https:/
 :execute "! jest " . alternate#FindTest()
 ```
 
-Find and execute the test for the current python file using [nost](https://github.com/nose-devs/nose).
+Find and execute the test for the current python file using [nose](https://github.com/nose-devs/nose).
 
 ```
 :execute "! nosetests " . alternate#FindTest()
