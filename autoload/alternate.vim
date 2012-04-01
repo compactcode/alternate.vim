@@ -78,7 +78,11 @@ function s:FindMatches(search_dirs, file_name_pattern)
 endfunction
 
 function s:TestPattern()
-  return  g:test_token . g:test_token_location
+  if g:test_token_location == "^"
+    return g:test_token_location . g:test_token
+  else
+    return g:test_token . g:test_token_location
+  endif
 endfunction
 
 function s:ParentDirectoryName(path)
