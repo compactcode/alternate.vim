@@ -4,19 +4,19 @@ A lightweight vim plugin for switching between test and implementation files.
 
 ### Usage
 
-Toggle between editing a test and implmentation file in the current window:
+Toggle between test and implmentation files:
 
 ```
 :Alternate
 ```
 
-Find the path to the test for the current file:
+Find the test for the current file:
 
 ```
 :echo alternate#FindTest()
 ```
 
-Note: This will return the current file if the current file is a test.
+Note: This will return the current file for test files.
 
 ### Serious Usage
 
