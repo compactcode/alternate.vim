@@ -1,22 +1,16 @@
 ### alternate.vim
 
-Lightweight plugin for alternating between tests and implementation.
+A lightweight vim plugin for switching between test and implementation files.
 
 ### Usage
 
-Find and edit the alternate file in the current window:
+Toggle between editing a test and implmentation file in the current window:
 
 ```
 :Alternate
 ```
 
-Find the path of the alternate file:
-
-```
-:echo alternate#FindAlternate()
-```
-
-Find the path of the test for the current file:
+Find the path to the test for the current file:
 
 ```
 :echo alternate#FindTest()
@@ -24,7 +18,28 @@ Find the path of the test for the current file:
 
 Note: This will return the current file if the current file is a test.
 
-### Supported Conventions
+### Serious Usage
+
+Find and execute the spec for the current ruby file using [rspec](https://github.com/rspec/rspec-core).
+
+```
+:execute "! rspec " . alternate#FindTest()
+```
+
+Find and execute the spec for the current coffeescript file using [jest](https://github.com/keithpitt/jest).
+
+```
+:execute "! jest " . alternate#FindTest()
+```
+
+And putting it all together...
+
+```
+autocmd FileType ruby nnoremap <buffer> <Leader>r :execute "! rspec " . alternate#FindTest() <CR>
+autocmd FileType coffee nnoremap <buffer> <Leader>r :execute "! jest " . alternate#FindTest() <CR>
+```
+
+### Supported Project Conventions
 
 #### Ruby
 
@@ -33,7 +48,7 @@ Note: This will return the current file if the current file is a test.
 {app,lib}/**/foo.rb -> test/**/foo_unit.rb
 ```
 
-#### Coffee
+#### Coffee Script
 
 ```
 app/assets/**/foo.js.coffee -> spec/**/foo_spec.js.coffee
