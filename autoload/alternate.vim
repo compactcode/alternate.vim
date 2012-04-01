@@ -1,43 +1,58 @@
+let s:impl_dirs          = "app,lib"
+let s:test_dirs          = "spec"
+
+let s:to_impl_pattern    = "_spec$"
+let s:to_impl_substitute = ""
+
+let s:to_test_pattern    = "$"
+let s:to_test_substitute = "_spec"
+
 function alternate#Alternate()
   execute "edit " . alternate#FindAlternate()
 endfunction
 
 function alternate#FindAlternate()
-  let directory_name = expand("%:h:t")
+  let alternates = alternate#FindAllAlternates()
+  if len(alternates) > 1
+    let current_path = expand("%")
+    for alternate_path in alternates
+      if s:ParentDirectoryName(current_path) == s:ParentDirectoryName(alternate_path)
+        return alternate_path
+      endif
+    endfor
+  endif
+  return get(alternates, 0)
+endfunction
+
+function alternate#FindAllAlternates()
   let file_name      = expand("%:t:r:r")
   let file_extension = expand("%:e:e")
   if s:IsTest(file_name)
-    return s:FindImplementation(directory_name, file_name, file_extension)
+    return s:FindImplMatches(file_name, file_extension)
   else
-    return s:FindTest(directory_name, file_name, file_extension)
+    return s:FindTestMatches(file_name, file_extension)
   endif
 endfunction
 
 function s:IsTest(file_name)
-  return match(a:file_name, '_spec$') != -1
+  return match(a:file_name, s:to_impl_pattern) != -1
 endfunction
 
-function s:FindImplementation(directory_name, file_name, file_extension)
-  let search_dirs       = "app,lib"
-  let file_name_pattern = substitute(a:file_name, '_spec$', '', '') . "." . a:file_extension
-  return s:FindClosestMatch(a:directory_name, search_dirs, file_name_pattern)
+function s:FindImplMatches(test_file_name, extension)
+  let impl_name_pattern = substitute(a:test_file_name, s:to_impl_pattern, s:to_impl_substitute, '') . "." . a:extension
+  return s:FindMatches(s:impl_dirs, impl_name_pattern)
 endfunction
 
-function s:FindTest(directory_name, file_name, file_extension)
-  let search_dirs       = "spec"
-  let file_name_pattern = substitute(a:file_name, '$', '_spec', '') . "." . a:file_extension
-  return s:FindClosestMatch(a:directory_name, search_dirs, file_name_pattern)
+function s:FindTestMatches(impl_file_name, extension)
+  let test_name_pattern = substitute(a:impl_file_name, s:to_test_pattern, s:to_test_substitute, '') . "." . a:extension
+  return s:FindMatches(s:test_dirs, test_name_pattern)
 endfunction
 
-function s:FindClosestMatch(directory_name, search_dirs, file_name_pattern)
-  let matches = split(globpath(a:search_dirs, "**/" . a:file_name_pattern), "\n")
-  if len(matches) > 1
-    for file_path in matches
-      if fnamemodify(file_path, ':h:t') == a:directory_name
-        return file_path
-      endif
-    endfor
-  endif
-  return get(matches, 0)
+function s:FindMatches(search_dirs, file_name_pattern)
+  return split(globpath(a:search_dirs, "**/" . a:file_name_pattern), "\n")
+endfunction
+
+function s:ParentDirectoryName(path)
+  return fnamemodify(a:path, ':h:t')
 endfunction
 
