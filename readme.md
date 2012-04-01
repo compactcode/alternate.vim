@@ -16,8 +16,18 @@ Find the name of the alternate file:
 :echo alternate#FindAlternate()
 ```
 
-### Supported Languages
+### Supported Conventions
 
-* ruby - rspec
-* coffee - jasmine
+#### Ruby
+
+```
+{app,lib}/**/foo.rb -> spec/**/foo_spec.rb
+{app,lib}/**/foo.rb -> test/**/foo_unit.rb
+```
+
+#### Coffee
+
+```
+app/assets/**/foo.js.coffee -> spec/**/foo_spec.js.coffee
+```
 

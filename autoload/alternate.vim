@@ -1,7 +1,18 @@
-let s:impl_dirs           = 'app,lib'
-let s:test_dirs           = 'spec'
-let s:test_token          = '_spec'
-let s:test_token_location = '$'
+if !exists("g:impl_dirs")
+  let g:impl_dirs = '*'
+endif
+
+if !exists("g:test_dirs")
+  let g:test_dirs = '*'
+endif
+
+if !exists("g:test_token")
+  let g:test_token = '_test'
+endif
+
+if !exists("g:test_token_location")
+  let g:test_token_location = '$'
+endif
 
 function alternate#Alternate()
   let alternate = alternate#FindAlternate()
@@ -36,7 +47,7 @@ function alternate#FindAllAlternates()
 endfunction
 
 function s:TestPattern()
-  return  s:test_token . s:test_token_location
+  return  g:test_token . g:test_token_location
 endfunction
 
 function s:IsTest(file_name)
@@ -45,12 +56,12 @@ endfunction
 
 function s:FindImplMatches(test_file_name, extension)
   let impl_name_pattern = substitute(a:test_file_name, s:TestPattern(), '', '') . '.' . a:extension
-  return s:FindMatches(s:impl_dirs, impl_name_pattern)
+  return s:FindMatches(g:impl_dirs, impl_name_pattern)
 endfunction
 
 function s:FindTestMatches(impl_file_name, extension)
-  let test_name_pattern = substitute(a:impl_file_name, s:test_token_location, s:test_token, '') . '.' . a:extension
-  return s:FindMatches(s:test_dirs, test_name_pattern)
+  let test_name_pattern = substitute(a:impl_file_name, g:test_token_location, g:test_token, '') . '.' . a:extension
+  return s:FindMatches(g:test_dirs, test_name_pattern)
 endfunction
 
 function s:FindMatches(search_dirs, file_name_pattern)
