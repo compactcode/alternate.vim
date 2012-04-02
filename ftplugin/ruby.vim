@@ -1,4 +1,8 @@
-let g:impl_dirs = "app,lib"
+if finddir('app', '.;') == "app"
+  let g:impl_dirs = "app,lib"
+elseif finddir('lib', '.;') == "lib"
+  let g:impl_dirs = "lib"
+endif
 
 if finddir('spec', '.;') == "spec"
   let g:test_dirs  = "spec"
