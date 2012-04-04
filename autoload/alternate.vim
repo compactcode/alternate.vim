@@ -35,22 +35,19 @@ endfunction
 " =============================================================================
 
 function alternate#Alternate()
-  let alternate = s:FindAlternate()
-  if len(alternate) > 1
-    execute 'edit ' . alternate
-  else
-    echo 'No alternate for ' . expand('%:t')
-  endif
+  call s:WithAlternate(s:FindAlternate(), 'edit')
+endfunction
+
+function alternate#RunTestUsing(command)
+  call s:WithAlternate(s:FindTest(), '!'. a:command)
+endfunction
+
+function alternate#FindAlternate()
+  return s:FindAlternate()
 endfunction
 
 function alternate#FindTest()
-  let file_path = expand('%')
-  let file_name = expand('%:t:r:r')
-  if s:IsTest(file_name)
-    return file_path
-  endif
-  let file_extension = expand('%:e:e')
-  return s:ChooseAlternateFile(file_path, s:FindTestFiles(file_name, file_extension))
+  return s:FindTest()
 endfunction
 
 " =============================================================================
@@ -60,6 +57,16 @@ endfunction
 function s:FindAlternate()
   let file_path = expand('%')
   return s:ChooseAlternateFile(file_path, s:FindAlternateFiles())
+endfunction
+
+function s:FindTest()
+  let file_path = expand('%')
+  let file_name = expand('%:t:r:r')
+  if s:IsTest(file_name)
+    return file_path
+  endif
+  let file_extension = expand('%:e:e')
+  return s:ChooseAlternateFile(file_path, s:FindTestFiles(file_name, file_extension))
 endfunction
 
 function s:ChooseAlternateFile(current_path, alternative_paths)
@@ -110,5 +117,13 @@ endfunction
 
 function s:ParentDirectoryName(path)
   return fnamemodify(a:path, ':h:t')
+endfunction
+
+function s:WithAlternate(alternate, command)
+  if len(a:alternate) > 1
+    execute a:command . ' ' . a:alternate
+  else
+    echo 'No alternate for ' . expand('%:t')
+  endif
 endfunction
 

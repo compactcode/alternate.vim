@@ -1,4 +1,4 @@
-### alternate.vim
+#### alternate.vim
 
 A lightweight vim plugin for switching between test and implementation files.
 
@@ -6,44 +6,27 @@ A lightweight vim plugin for switching between test and implementation files.
 
 Toggle between test and implmentation files:
 
-```
+```vim
 :Alternate
 ```
 
-Find the test for the current file:
+Find and run the test file (runs the current file if it is a test):
 
-```
-:echo alternate#FindTest()
-```
-
-Note: This will return the current file for test files.
-
-### Serious Usage
-
-Find and execute the spec for the current ruby file using [rspec](https://github.com/rspec/rspec-core).
-
-```
-:execute "! rspec " . alternate#FindTest()
+```vim
+:RunTestUsing("rspec")
 ```
 
-Find and execute the spec for the current coffeescript file using [jest](https://github.com/keithpitt/jest).
+### Configuration
 
-```
-:execute "! jest " . alternate#FindTest()
-```
+```vim
+" Switch between test and implementation files
+nnoremap <Leader>a :Alternate<CR>
 
-Find and execute the test for the current python file using [nose](https://github.com/nose-devs/nose).
+" Quickly find and run a ruby test file using rspec
+autocmd FileType ruby   nnoremap <buffer> <Leader>r :RunTestUsing("rspec")<CR>
 
-```
-:execute "! nosetests " . alternate#FindTest()
-```
-
-And putting it all together...
-
-```
-autocmd FileType ruby nnoremap <buffer> <Leader>r :execute "! rspec " . alternate#FindTest() <CR>
-autocmd FileType coffee nnoremap <buffer> <Leader>r :execute "! jest " . alternate#FindTest() <CR>
-autocmd FileType python nnoremap <buffer> <Leader>r :execute "! nosetests " . alternate#FindTest() <CR>
+" Quickly find and run a python test file using nose
+autocmd FileType python nnoremap <buffer> <Leader>r :RunTestUsing("nosetests")<CR>
 ```
 
 ### Supported Project Conventions

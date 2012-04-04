@@ -12,4 +12,5 @@ elseif finddir('test', '.;') == "test"
   let b:alternate_test_token = "_test"
 endif
 
-command! -buffer Alternate call alternate#Alternate()
+command! -buffer -nargs=0 Alternate    call alternate#Alternate()
+command! -buffer -nargs=1 RunTestUsing call alternate#RunTestUsing(<args>)
