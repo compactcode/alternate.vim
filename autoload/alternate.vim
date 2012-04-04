@@ -39,7 +39,7 @@ function alternate#Alternate()
   if len(alternate) > 1
     execute 'edit ' . alternate
   else
-    echo 'No alternate file could be found.'
+    echo 'No alternate for ' . expand('%:t')
   endif
 endfunction
 
