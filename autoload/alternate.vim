@@ -35,7 +35,7 @@ function alternate#FindTest()
     return file_path
   endif
   let file_extension = expand('%:e:e')
-  return s:FindClosestAlternative(file_path, s:FindTestMatches(file_name, file_extension))
+  return s:FindClosestAlternative(file_path, s:FindTestFiles(file_name, file_extension))
 endfunction
 
 function s:FindClosestAlternative(file_path, alternative_paths)
@@ -53,31 +53,31 @@ function s:FindAllAlternates()
   let file_name      = expand('%:t:r:r')
   let file_extension = expand('%:e:e')
   if s:IsTest(file_name)
-    return s:FindImplMatches(file_name, file_extension)
+    return s:FindImplFiles(file_name, file_extension)
   else
-    return s:FindTestMatches(file_name, file_extension)
+    return s:FindTestFiles(file_name, file_extension)
   endif
 endfunction
 
 function s:IsTest(file_name)
-  return match(a:file_name, s:TestPattern()) != -1
+  return match(a:file_name, s:FindTestToken()) != -1
 endfunction
 
-function s:FindImplMatches(test_file_name, extension)
-  let impl_name_pattern = substitute(a:test_file_name, s:TestPattern(), '', '') . '.' . a:extension
-  return s:FindMatches(g:impl_dirs, impl_name_pattern)
+function s:FindImplFiles(file_name, extension)
+  let impl_name_pattern = substitute(a:file_name, s:FindTestToken(), '', '') . '.' . a:extension
+  return s:FindFiles(g:impl_dirs, impl_name_pattern)
 endfunction
 
-function s:FindTestMatches(impl_file_name, extension)
-  let test_name_pattern = substitute(a:impl_file_name, g:test_token_location, g:test_token, '') . '.' . a:extension
-  return s:FindMatches(g:test_dirs, test_name_pattern)
+function s:FindTestFiles(file_name, extension)
+  let test_name_pattern = substitute(a:file_name, g:test_token_location, g:test_token, '') . '.' . a:extension
+  return s:FindFiles(g:test_dirs, test_name_pattern)
 endfunction
 
-function s:FindMatches(search_dirs, file_name_pattern)
-  return split(globpath(a:search_dirs, '**/' . a:file_name_pattern), '\n')
+function s:FindFiles(search_dirs, file_name)
+  return split(globpath(a:search_dirs, '**/' . a:file_name), '\n')
 endfunction
 
-function s:TestPattern()
+function s:FindTestToken()
   return substitute(g:test_token, g:test_token_location, g:test_token_location, '')
 endfunction
 
