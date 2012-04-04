@@ -1,35 +1,38 @@
-#### alternate.vim
+# alternate.vim
 
-A lightweight vim plugin for switching between test and implementation files.
+A lightweight vim plugin for dealing with test and implementation files.
 
-### Usage
+## Usage
 
-Toggle between test and implmentation files:
+Open the alternate file:
 
 ```vim
 :Alternate
 ```
 
-Find and run the test file (runs the current file if it is a test):
+Retrieve the alternate file:
 
 ```vim
-:RunTestUsing("rspec")
+:echo alternate#FindAlternate()
 ```
 
-### Configuration
+Retrieve the test file:
 
 ```vim
-" Switch between test and implementation files
-nnoremap <Leader>a :Alternate<CR>
+:echo alternate#FindTest()
+```
 
+Run tests:
+
+```vim
 " Quickly find and run a ruby test file using rspec
-autocmd FileType ruby   nnoremap <buffer> <Leader>r :RunTestUsing("rspec")<CR>
+autocmd FileType ruby nnoremap <buffer> <Leader>r :execute "! rspec " . alternate#FindTest() <CR>
 
 " Quickly find and run a python test file using nose
-autocmd FileType python nnoremap <buffer> <Leader>r :RunTestUsing("nosetests")<CR>
+autocmd FileType python nnoremap <buffer> <Leader>r :execute "! nosetests " . alternate#FindTest() <CR>
 ```
 
-### Supported Project Conventions
+## Supported Conventions
 
 #### Ruby
 
