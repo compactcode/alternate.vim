@@ -35,17 +35,12 @@ endfunction
 " =============================================================================
 
 function alternate#Alternate()
-  let alternate = alternate#FindAlternate()
+  let alternate = s:FindAlternate()
   if len(alternate) > 1
     execute 'edit ' . alternate
   else
     echo 'No alternate for ' . expand('%:t')
   endif
-endfunction
-
-function alternate#FindAlternate()
-  let file_path = expand('%')
-  return s:ChooseAlternateFile(file_path, s:FindAlternateFiles())
 endfunction
 
 function alternate#FindTest()
@@ -61,6 +56,11 @@ endfunction
 " =============================================================================
 " Private Interface
 " =============================================================================
+
+function s:FindAlternate()
+  let file_path = expand('%')
+  return s:ChooseAlternateFile(file_path, s:FindAlternateFiles())
+endfunction
 
 function s:ChooseAlternateFile(current_path, alternative_paths)
   " If there are multiple matches, look for one with the same parent directory.
