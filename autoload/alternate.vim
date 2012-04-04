@@ -1,18 +1,38 @@
-if !exists("g:source_dirs")
-  let g:source_dirs = '*'
-endif
+" =============================================================================
+" Configuration
+" =============================================================================
 
-if !exists("g:test_dirs")
-  let g:test_dirs = '*'
-endif
+function s:SourceDirs()
+  if exists("b:alternate_source_dirs")
+    return b:alternate_source_dirs
+  endif
+  return '*'
+endfunction
 
-if !exists("g:test_token")
-  let g:test_token = '_test'
-endif
+function s:TestDirs()
+  if exists("b:alternate_test_dirs")
+    return b:alternate_test_dirs
+  endif
+  return '*'
+endfunction
 
-if !exists("g:test_token_location")
-  let g:test_token_location = '$'
-endif
+function s:TestToken()
+  if exists("b:alternate_test_token")
+    return b:alternate_test_token
+  endif
+  return '_test'
+endfunction
+
+function s:TestTokenLocation()
+  if exists("b:alternate_test_token_location")
+    return b:alternate_test_token_location
+  endif
+  return '$'
+endfunction
+
+" =============================================================================
+" Public Interface
+" =============================================================================
 
 function alternate#Alternate()
   let alternate = alternate#FindAlternate()
@@ -37,6 +57,10 @@ function alternate#FindTest()
   let file_extension = expand('%:e:e')
   return s:ChooseAlternateFile(file_path, s:FindTestFiles(file_name, file_extension))
 endfunction
+
+" =============================================================================
+" Private Interface
+" =============================================================================
 
 function s:ChooseAlternateFile(current_path, alternative_paths)
   " If there are multiple matches, look for one with the same parent directory.
@@ -68,12 +92,12 @@ endfunction
 
 function s:FindSourceFiles(test_file_name, extension)
   let file_name = substitute(a:test_file_name, s:FindTestToken(), '', '')
-  return s:FindFiles(g:source_dirs, file_name, a:extension)
+  return s:FindFiles(s:SourceDirs(), file_name, a:extension)
 endfunction
 
 function s:FindTestFiles(source_file_name, extension)
-  let file_name = substitute(a:source_file_name, g:test_token_location, g:test_token, '')
-  return s:FindFiles(g:test_dirs, file_name, a:extension)
+  let file_name = substitute(a:source_file_name, s:TestTokenLocation(), s:TestToken(), '')
+  return s:FindFiles(s:TestDirs(), file_name, a:extension)
 endfunction
 
 function s:FindFiles(search_dirs, file_name, file_extension)
@@ -81,7 +105,7 @@ function s:FindFiles(search_dirs, file_name, file_extension)
 endfunction
 
 function s:FindTestToken()
-  return substitute(g:test_token, g:test_token_location, g:test_token_location, '')
+  return substitute(s:TestToken(), s:TestTokenLocation(), s:TestTokenLocation(), '')
 endfunction
 
 function s:ParentDirectoryName(path)

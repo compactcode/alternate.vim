@@ -1,15 +1,15 @@
 if finddir('app', '.;') == "app"
-  let g:source_dirs = "app,lib"
+  let b:alternate_source_dirs = "app,lib"
 elseif finddir('lib', '.;') == "lib"
-  let g:source_dirs = "lib"
+  let b:alternate_source_dirs = "lib"
 endif
 
 if finddir('spec', '.;') == "spec"
-  let g:test_dirs  = "spec"
-  let g:test_token = "_spec"
+  let b:alternate_test_dirs  = "spec"
+  let b:alternate_test_token = "_spec"
 elseif finddir('test', '.;') == "test"
-  let g:test_dirs  = "test"
-  let g:test_token = "_test"
+  let b:alternate_test_dirs  = "test"
+  let b:alternate_test_token = "_test"
 endif
 
 command! -buffer Alternate call alternate#Alternate()

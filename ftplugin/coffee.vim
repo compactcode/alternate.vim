@@ -1,11 +1,11 @@
 if finddir('app/assets', '.;') == "app/assets"
-  let g:source_dirs = "app/assets"
+  let b:alternate_source_dirs = "app/assets"
 endif
 
 if finddir('spec', '.;') == "spec"
-  let g:test_dirs  = "spec"
+  let b:alternate_test_dirs  = "spec"
 endif
 
-let g:test_token = "_spec"
+let b:alternate_test_token = "_spec"
 
 command! -buffer Alternate call alternate#Alternate()
