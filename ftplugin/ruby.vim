@@ -1,7 +1,7 @@
 if finddir('app', '.;') == "app"
-  let g:impl_dirs = "app,lib"
+  let g:source_dirs = "app,lib"
 elseif finddir('lib', '.;') == "lib"
-  let g:impl_dirs = "lib"
+  let g:source_dirs = "lib"
 endif
 
 if finddir('spec', '.;') == "spec"

@@ -1,5 +1,5 @@
 if finddir('app/assets', '.;') == "app/assets"
-  let g:impl_dirs = "app/assets"
+  let g:source_dirs = "app/assets"
 endif
 
 if finddir('spec', '.;') == "spec"

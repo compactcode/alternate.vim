@@ -1,5 +1,5 @@
-if !exists("g:impl_dirs")
-  let g:impl_dirs = '*'
+if !exists("g:source_dirs")
+  let g:source_dirs = '*'
 endif
 
 if !exists("g:test_dirs")
@@ -53,7 +53,7 @@ function s:FindAllAlternates()
   let file_name      = expand('%:t:r:r')
   let file_extension = expand('%:e:e')
   if s:IsTest(file_name)
-    return s:FindImplFiles(file_name, file_extension)
+    return s:FindSourceFiles(file_name, file_extension)
   else
     return s:FindTestFiles(file_name, file_extension)
   endif
@@ -63,9 +63,9 @@ function s:IsTest(file_name)
   return match(a:file_name, s:FindTestToken()) != -1
 endfunction
 
-function s:FindImplFiles(file_name, extension)
-  let impl_name_pattern = substitute(a:file_name, s:FindTestToken(), '', '') . '.' . a:extension
-  return s:FindFiles(g:impl_dirs, impl_name_pattern)
+function s:FindSourceFiles(file_name, extension)
+  let file_name = substitute(a:file_name, s:FindTestToken(), '', '') . '.' . a:extension
+  return s:FindFiles(g:source_dirs, file_name)
 endfunction
 
 function s:FindTestFiles(file_name, extension)
