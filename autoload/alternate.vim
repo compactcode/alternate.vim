@@ -25,7 +25,7 @@ endfunction
 
 function alternate#FindAlternate()
   let file_path = expand('%')
-  return s:FindClosestAlternative(file_path, s:FindAllAlternates())
+  return s:ChooseAlternateFile(file_path, s:FindAlternateFiles())
 endfunction
 
 function alternate#FindTest()
@@ -35,21 +35,24 @@ function alternate#FindTest()
     return file_path
   endif
   let file_extension = expand('%:e:e')
-  return s:FindClosestAlternative(file_path, s:FindTestFiles(file_name, file_extension))
+  return s:ChooseAlternateFile(file_path, s:FindTestFiles(file_name, file_extension))
 endfunction
 
-function s:FindClosestAlternative(file_path, alternative_paths)
+function s:ChooseAlternateFile(current_path, alternative_paths)
+  " If there are multiple matches, look for one with the same parent directory.
   if len(a:alternative_paths) > 1
     for alternate_path in a:alternative_paths
-      if s:ParentDirectoryName(a:file_path) == s:ParentDirectoryName(alternate_path)
+      if s:ParentDirectoryName(a:current_path) == s:ParentDirectoryName(alternate_path)
         return alternate_path
       endif
     endfor
   endif
+
+  " Otherise, always pick the first match.
   return get(a:alternative_paths, 0)
 endfunction
 
-function s:FindAllAlternates()
+function s:FindAlternateFiles()
   let file_name      = expand('%:t:r:r')
   let file_extension = expand('%:e:e')
   if s:IsTest(file_name)
