@@ -63,18 +63,18 @@ function s:IsTest(file_name)
   return match(a:file_name, s:FindTestToken()) != -1
 endfunction
 
-function s:FindSourceFiles(file_name, extension)
-  let file_name = substitute(a:file_name, s:FindTestToken(), '', '') . '.' . a:extension
-  return s:FindFiles(g:source_dirs, file_name)
+function s:FindSourceFiles(test_file_name, extension)
+  let file_name = substitute(a:test_file_name, s:FindTestToken(), '', '')
+  return s:FindFiles(g:source_dirs, file_name, a:extension)
 endfunction
 
-function s:FindTestFiles(file_name, extension)
-  let test_name_pattern = substitute(a:file_name, g:test_token_location, g:test_token, '') . '.' . a:extension
-  return s:FindFiles(g:test_dirs, test_name_pattern)
+function s:FindTestFiles(source_file_name, extension)
+  let file_name = substitute(a:source_file_name, g:test_token_location, g:test_token, '')
+  return s:FindFiles(g:test_dirs, file_name, a:extension)
 endfunction
 
-function s:FindFiles(search_dirs, file_name)
-  return split(globpath(a:search_dirs, '**/' . a:file_name), '\n')
+function s:FindFiles(search_dirs, file_name, file_extension)
+  return split(globpath(a:search_dirs, '**/' . a:file_name . '.' .a:file_extension), '\n')
 endfunction
 
 function s:FindTestToken()
