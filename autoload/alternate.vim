@@ -35,11 +35,12 @@ endfunction
 " =============================================================================
 
 function alternate#Alternate()
-  call s:WithAlternate(s:FindAlternate(), 'edit')
-endfunction
-
-function alternate#RunTestUsing(command)
-  call s:WithAlternate(s:FindTest(), '!'. a:command)
+  let alternate = s:FindAlternate()
+  if len(alternate) > 1
+    execute 'edit ' . alternate
+  else
+    echoerr 'No alternate for ' . expand('%:t')
+  endif
 endfunction
 
 function alternate#FindAlternate()
@@ -117,13 +118,5 @@ endfunction
 
 function s:ParentDirectoryName(path)
   return fnamemodify(a:path, ':h:t')
-endfunction
-
-function s:WithAlternate(alternate, command)
-  if len(a:alternate) > 1
-    execute a:command . ' ' . a:alternate
-  else
-    echo 'No alternate for ' . expand('%:t')
-  endif
 endfunction
 

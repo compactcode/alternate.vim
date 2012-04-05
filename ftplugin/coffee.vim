@@ -8,4 +8,4 @@ endif
 
 let b:alternate_test_token = "_spec"
 
-command! -buffer Alternate call alternate#Alternate()
+command! -buffer -nargs=0 Alternate call alternate#Alternate()
