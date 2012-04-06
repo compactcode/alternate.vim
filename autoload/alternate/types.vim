@@ -1,39 +1,70 @@
 function alternate#types#Javascript()
-  if finddir('app/assets', '.;') == "app/assets"
-    let b:alternate_source_dirs = "app/assets"
+
+  " Assume jasmine as the default test tool.
+  let b:alternate_test_token          = "_spec"
+  let b:alternate_test_token_location = "$"
+
+  if s:Exists('app/assets/javascripts')
+    let b:alternate_source_dirs = "app/assets/javascripts"
+  else
+    let b:alternate_source_dirs = "**"
   endif
 
-  if finddir('spec', '.;') == "spec"
+  if s:Exists('spec/javascripts')
+    let b:alternate_test_dirs  = "spec/javascripts"
+  elseif s:Exists('spec')
     let b:alternate_test_dirs  = "spec"
+  else
+    let b:alternate_test_dirs   = "**"
   endif
-
-  let b:alternate_test_token = "_spec"
 
   command! -buffer -nargs=0 Alternate call alternate#Alternate()
 endfunction
 
 function alternate#types#Ruby()
-  if finddir('app', '.;') == "app"
+
+  " Assume test unit as the default test tool.
+  let b:alternate_test_token          = "_test"
+  let b:alternate_test_token_location = "$"
+
+  if s:Exists('app')
     let b:alternate_source_dirs = "app,lib"
-  elseif finddir('lib', '.;') == "lib"
+  elseif s:Exists('lib')
     let b:alternate_source_dirs = "lib"
+  else
+    let b:alternate_source_dirs = "**"
   endif
 
-  if finddir('spec', '.;') == "spec"
+  if s:Exists('spec')
     let b:alternate_test_dirs  = "spec"
     let b:alternate_test_token = "_spec"
-  elseif finddir('test', '.;') == "test"
+  elseif s:Exists('test')
     let b:alternate_test_dirs  = "test"
-    let b:alternate_test_token = "_test"
+  else
+    let b:alternate_test_dirs  = "**"
   endif
 
   command! -buffer -nargs=0 Alternate call alternate#Alternate()
 endfunction
 
 function alternate#types#Python()
+
+  " Assume test unit as the default test tool.
   let b:alternate_test_token          = "test_"
   let b:alternate_test_token_location = "^"
 
+  let b:alternate_source_dirs = "**"
+
+  if s:Exists('test')
+    let b:alternate_test_dirs  = "test"
+  else
+    let b:alternate_test_dirs  = "**"
+  endif
+
   command! -buffer -nargs=0 Alternate call alternate#Alternate()
+endfunction
+
+function s:Exists(path)
+  return finddir(a:path, '.;') == a:path
 endfunction
 

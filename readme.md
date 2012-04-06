@@ -44,12 +44,14 @@ autocmd FileType python nnoremap <buffer> <Leader>r :execute "! nosetests " . al
 #### Python
 
 ```
+**/foo.py -> test/**/test_foo.py
 **/foo.py -> **/test_foo.py
 ```
 
 #### Coffee Script
 
 ```
-app/assets/**/foo.js.coffee -> spec/**/foo_spec.js.coffee
+app/assets/javascripts/**/foo.js.coffee -> spec/javascripts/**/foo_spec.js.coffee
+**/foo.js.coffee -> spec/**/foo_spec.js.coffee
 ```
 

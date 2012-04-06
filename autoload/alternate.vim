@@ -3,31 +3,19 @@
 " =============================================================================
 
 function s:SourceDirs()
-  if exists("b:alternate_source_dirs")
-    return b:alternate_source_dirs
-  endif
-  return '*'
+  return b:alternate_source_dirs
 endfunction
 
 function s:TestDirs()
-  if exists("b:alternate_test_dirs")
-    return b:alternate_test_dirs
-  endif
-  return '*'
+  return b:alternate_test_dirs
 endfunction
 
 function s:TestToken()
-  if exists("b:alternate_test_token")
-    return b:alternate_test_token
-  endif
-  return '_test'
+  return b:alternate_test_token
 endfunction
 
 function s:TestTokenLocation()
-  if exists("b:alternate_test_token_location")
-    return b:alternate_test_token_location
-  endif
-  return '$'
+  return b:alternate_test_token_location
 endfunction
 
 " =============================================================================
