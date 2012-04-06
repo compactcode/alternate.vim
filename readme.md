@@ -15,13 +15,27 @@ Find the test file:
 ```vim
 :echo alternate#FindTest()
 ```
+## Usage with [open](https://github.com/compactcode/open.vim)
+
+```vim
+:Open(alternate#FindAlternate())
+```
+
+Open the alternate file in the current window.
+
+```vim
+:OpenVertical(alternate#FindAlternate())
+```
+
+Open the alternate file in a new vertical split.
 
 ## How it works
 
 When you open a recognised file type, alternate examines your working directory for
-common associated project layout conventions.
+common project layout conventions. Once a layout convention is recognised alternate
+will use it to scan for alternate files.
 
-## Recognised Conventions
+### Recognised Conventions
 
 #### Ruby
 
