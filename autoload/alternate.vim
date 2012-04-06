@@ -1,35 +1,6 @@
 " =============================================================================
-" Configuration
-" =============================================================================
-
-function s:SourceDirs()
-  return b:alternate_source_dirs
-endfunction
-
-function s:TestDirs()
-  return b:alternate_test_dirs
-endfunction
-
-function s:TestToken()
-  return b:alternate_test_token
-endfunction
-
-function s:TestTokenLocation()
-  return b:alternate_test_token_location
-endfunction
-
-" =============================================================================
 " Public Interface
 " =============================================================================
-
-function alternate#Alternate()
-  let alternate = s:FindAlternate()
-  if len(alternate) > 1
-    execute 'edit ' . alternate
-  else
-    echo 'No alternate for ' . expand('%:t')
-  endif
-endfunction
 
 function alternate#FindAlternate()
   return s:FindAlternate()
@@ -88,12 +59,12 @@ endfunction
 
 function s:FindSourceFiles(test_file_name, extension)
   let file_name = substitute(a:test_file_name, s:FindTestToken(), '', '')
-  return s:FindFiles(s:SourceDirs(), file_name, a:extension)
+  return s:FindFiles(b:alternate_source_dirs, file_name, a:extension)
 endfunction
 
 function s:FindTestFiles(source_file_name, extension)
-  let file_name = substitute(a:source_file_name, s:TestTokenLocation(), s:TestToken(), '')
-  return s:FindFiles(s:TestDirs(), file_name, a:extension)
+  let file_name = substitute(a:source_file_name, b:alternate_test_token_location, b:alternate_test_token, '')
+  return s:FindFiles(b:alternate_test_dirs, file_name, a:extension)
 endfunction
 
 function s:FindFiles(search_dirs, file_name, file_extension)
@@ -101,7 +72,7 @@ function s:FindFiles(search_dirs, file_name, file_extension)
 endfunction
 
 function s:FindTestToken()
-  return substitute(s:TestToken(), s:TestTokenLocation(), s:TestTokenLocation(), '')
+  return substitute(b:alternate_test_token, b:alternate_test_token_location, b:alternate_test_token_location, '')
 endfunction
 
 function s:ParentDirectoryName(path)

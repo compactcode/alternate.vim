@@ -1,35 +1,26 @@
 # alternate.vim
 
-A lightweight vim plugin for dealing with test and implementation files.
+A simple vim plugin for finding test and implementation files.
 
 ## Usage
 
-Open the alternate file:
-
-```vim
-:Alternate
-```
-
-Retrieve the alternate file:
+Find the alternate file:
 
 ```vim
 :echo alternate#FindAlternate()
 ```
 
-Retrieve the test file:
+Find the test file:
 
 ```vim
 :echo alternate#FindTest()
 ```
 
-Run tests:
+Run a test file using rspec:
 
 ```vim
 " Quickly find and run a ruby test file using rspec
 autocmd FileType ruby nnoremap <buffer> <Leader>r :execute "! rspec " . alternate#FindTest() <CR>
-
-" Quickly find and run a python test file using nose
-autocmd FileType python nnoremap <buffer> <Leader>r :execute "! nosetests " . alternate#FindTest() <CR>
 ```
 
 ## Supported Conventions
@@ -48,7 +39,7 @@ autocmd FileType python nnoremap <buffer> <Leader>r :execute "! nosetests " . al
 **/foo.py -> **/test_foo.py
 ```
 
-#### Coffee Script
+#### {Java,Coffee} Script
 
 ```
 app/assets/javascripts/**/foo.js.coffee -> spec/javascripts/**/foo_spec.js.coffee

@@ -18,7 +18,6 @@ function alternate#types#Javascript()
     let b:alternate_test_dirs   = "**"
   endif
 
-  command! -buffer -nargs=0 Alternate call alternate#Alternate()
 endfunction
 
 function alternate#types#Ruby()
@@ -44,7 +43,6 @@ function alternate#types#Ruby()
     let b:alternate_test_dirs  = "**"
   endif
 
-  command! -buffer -nargs=0 Alternate call alternate#Alternate()
 endfunction
 
 function alternate#types#Python()
@@ -61,7 +59,6 @@ function alternate#types#Python()
     let b:alternate_test_dirs  = "**"
   endif
 
-  command! -buffer -nargs=0 Alternate call alternate#Alternate()
 endfunction
 
 function s:Exists(path)
