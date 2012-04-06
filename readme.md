@@ -1,6 +1,17 @@
 # alternate.vim
 
-A simple vim plugin for finding test and implementation files.
+Find your test and implementation files.
+
+## Why
+
+When your working on a software project you will often need to: 
+
+* Find and open the test for the current source file.
+* Find and open the source file for the current test file.
+* Find and run the test for the current source file you just modified.
+
+This plugin provides a simple interface to find test and implementation files across 
+different projects and languages.
 
 ## Usage
 
