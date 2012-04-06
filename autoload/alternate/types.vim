@@ -18,6 +18,7 @@ function alternate#types#Javascript()
     let b:alternate_test_dirs   = "**"
   endif
 
+  let b:alternate_enabled = 1
 endfunction
 
 function alternate#types#Ruby()
@@ -43,6 +44,7 @@ function alternate#types#Ruby()
     let b:alternate_test_dirs  = "**"
   endif
 
+  let b:alternate_enabled = 1
 endfunction
 
 function alternate#types#Python()
@@ -59,6 +61,7 @@ function alternate#types#Python()
     let b:alternate_test_dirs  = "**"
   endif
 
+  let b:alternate_enabled = 1
 endfunction
 
 function s:Exists(path)

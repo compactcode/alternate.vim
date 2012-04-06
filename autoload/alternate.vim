@@ -3,11 +3,19 @@
 " =============================================================================
 
 function alternate#FindAlternate()
-  return s:FindAlternate()
+  if exists('b:alternate_enabled')
+    return s:FindAlternate()
+  else
+    echom "Alternate not enabled for this file type."
+  end
 endfunction
 
 function alternate#FindTest()
-  return s:FindTest()
+  if exists('b:alternate_enabled')
+    return s:FindTest()
+  else
+    echom "Alternate not enabled for this file type."
+  end
 endfunction
 
 " =============================================================================

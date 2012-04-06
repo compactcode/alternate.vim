@@ -16,20 +16,19 @@ Find the test file:
 :echo alternate#FindTest()
 ```
 
-Run a test file using rspec:
+## How it works
 
-```vim
-" Quickly find and run a ruby test file using rspec
-autocmd FileType ruby nnoremap <buffer> <Leader>r :execute "! rspec " . alternate#FindTest() <CR>
-```
+When you open a recognised file type, alternate examines your working directory for
+common associated project layout conventions.
 
-## Supported Conventions
+## Recognised Conventions
 
 #### Ruby
 
 ```
-{app,lib}/**/foo.rb -> spec/**/foo_spec.rb
-{app,lib}/**/foo.rb -> test/**/foo_unit.rb
+(app|lib)/**/foo.rb -> spec/**/foo_spec.rb
+lib/**/foo.rb -> spec/**/foo_spec.rb
+**/foo.rb -> test/**/foo_unit.rb
 ```
 
 #### Python
@@ -39,7 +38,7 @@ autocmd FileType ruby nnoremap <buffer> <Leader>r :execute "! rspec " . alternat
 **/foo.py -> **/test_foo.py
 ```
 
-#### {Java,Coffee} Script
+#### (Java|Coffee) Script
 
 ```
 app/assets/javascripts/**/foo.js.coffee -> spec/javascripts/**/foo_spec.js.coffee
