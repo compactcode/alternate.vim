@@ -64,6 +64,24 @@ function alternate#types#Python()
   let b:alternate_enabled = 1
 endfunction
 
+function alternate#types#Haskell()
+  " Quickcheck test module files begin with 
+  " this by convention
+  let b:alternate_test_token          = "Qc"
+  let b:alternate_test_token_location = "^"
+  let b:alternate_source_dirs = "**"
+
+  " Cabal project recommended test directory: 
+  " http://www.haskell.org/haskellwiki/Structure_of_a_Haskell_project
+  if s:Exists('testsuite/tests/')
+    let b:alternate_test_dirs  = "testsuite/tests"
+  else
+    let b:alternate_test_dirs  = "**"
+  endif
+
+  let b:alternate_enabled = 1
+endfunction
+
 function s:Exists(path)
   return finddir(a:path, '.;') == a:path
 endfunction
