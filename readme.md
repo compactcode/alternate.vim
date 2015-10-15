@@ -51,22 +51,33 @@ will use it to scan for alternate files.
 #### Ruby
 
 ```
-(app|lib)/**/foo.rb -> spec/**/foo_spec.rb
-lib/**/foo.rb -> spec/**/foo_spec.rb
-**/foo.rb -> test/**/foo_unit.rb
+(app|lib)/**/foo.rb <-> spec/**/foo_spec.rb
+lib/**/foo.rb <-> spec/**/foo_spec.rb
+**/foo.rb <-> test/**/foo_unit.rb
 ```
 
 #### Python
 
 ```
-**/foo.py -> test/**/test_foo.py
-**/foo.py -> **/test_foo.py
+**/foo.py <-> test/**/test_foo.py
+**/foo.py <-> **/test_foo.py
 ```
 
 #### (Java|Coffee) Script
 
 ```
-app/assets/javascripts/**/foo.js.coffee -> spec/javascripts/**/foo_spec.js.coffee
-**/foo.js.coffee -> spec/**/foo_spec.js.coffee
+app/assets/javascripts/**/foo.js.coffee <-> spec/javascripts/**/foo_spec.js.coffee
+**/foo.js.coffee <-> spec/**/foo_spec.js.coffee
 ```
 
+#### Haskell
+
+```
+src/**/foo.hs <-> testsuite/tests/**/Qcfoo.hs
+```
+
+#### C++
+
+```
+**/Foo.cc <-> **/TestFoo.cc
+```

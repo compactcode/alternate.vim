@@ -1,5 +1,4 @@
 function alternate#types#Javascript()
-
   " Assume jasmine as the default test tool.
   let b:alternate_test_token          = "_spec"
   let b:alternate_test_token_location = "$"
@@ -22,7 +21,6 @@ function alternate#types#Javascript()
 endfunction
 
 function alternate#types#Ruby()
-
   " Assume test unit as the default test tool.
   let b:alternate_test_token          = "_test"
   let b:alternate_test_token_location = "$"
@@ -48,7 +46,6 @@ function alternate#types#Ruby()
 endfunction
 
 function alternate#types#Python()
-
   " Assume test unit as the default test tool.
   let b:alternate_test_token          = "test_"
   let b:alternate_test_token_location = "^"
@@ -65,13 +62,14 @@ function alternate#types#Python()
 endfunction
 
 function alternate#types#Haskell()
-  " Quickcheck test module files begin with 
+  " Quickcheck test module files begin with
   " this by convention
   let b:alternate_test_token          = "Qc"
   let b:alternate_test_token_location = "^"
+
   let b:alternate_source_dirs = "**"
 
-  " Cabal project recommended test directory: 
+  " Cabal project recommended test directory:
   " http://www.haskell.org/haskellwiki/Structure_of_a_Haskell_project
   if s:Exists('testsuite/tests/')
     let b:alternate_test_dirs  = "testsuite/tests"
@@ -82,7 +80,16 @@ function alternate#types#Haskell()
   let b:alternate_enabled = 1
 endfunction
 
+function alternate#types#Cpp()
+  let b:alternate_test_token          = "Test"
+  let b:alternate_test_token_location = "^"
+
+  let b:alternate_source_dirs = "**,.."
+  let b:alternate_test_dirs  = "test,**,."
+
+  let b:alternate_enabled = 1
+endfunction
+
 function s:Exists(path)
   return finddir(a:path, '.;') == a:path
 endfunction
-
