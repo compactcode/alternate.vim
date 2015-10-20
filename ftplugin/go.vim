@@ -1,0 +1,1 @@
+call alternate#types#Go()

@@ -90,6 +90,16 @@ function alternate#types#Cpp()
   let b:alternate_enabled = 1
 endfunction
 
+function alternate#types#Go()
+  let b:alternate_test_token          = "_test"
+  let b:alternate_test_token_location = "$"
+
+  let b:alternate_source_dirs = "**"
+  let b:alternate_test_dirs  = "**"
+
+  let b:alternate_enabled = 1
+endfunction
+
 function s:Exists(path)
   return finddir(a:path, '.;') == a:path
 endfunction
